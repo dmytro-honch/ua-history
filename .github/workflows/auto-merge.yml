@@ -1,0 +1,30 @@
+name: Auto-merge Submissions
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  auto-merge:
+    if: startsWith(github.head_ref, 'submission/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Auto-merge
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Wait for PR to be ready
+            await new Promise(r => setTimeout(r, 3000));
+            
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              merge_method: 'squash'
+            });
+            
+            console.log('✅ PR merged successfully');

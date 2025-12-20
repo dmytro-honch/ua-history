@@ -1,0 +1,17 @@
+{
+  "header": {
+    "languages": {
+      "ua-UA": "українська",
+      "en-US": "english"
+    },
+    "nav": {
+      "home": "home",
+      "map": "historical map",
+      "about": "about us",
+      "contribute": "contribute"
+    }
+  },
+  "footer": {
+    "copyright": "Interactive History of Ukraine"
+  }
+}
