@@ -1,6 +1,6 @@
-import { MoonIcon } from '@/components/icons/MoonIcon';
-import { SunIcon } from '@/components/icons/SunIcon';
-import { useTheme } from '@/providors/themeProvider';
+import { MoonIcon } from '@/components/icons/moonIcon';
+import { SunIcon } from '@/components/icons/sunIcon';
+import { useTheme } from '@/providers/themeProvider';
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();

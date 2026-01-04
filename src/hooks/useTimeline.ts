@@ -4,24 +4,11 @@ import { ERAS, type EraConfig, getEraById } from 'data/config/eras';
 
 const DEFAULT_ERA = ERAS[2]; // medieval
 
-interface UseTimelineResult {
-  era: EraConfig;
-  year: number;
-  setEra: (eraId: string) => void;
-  setYear: (year: number) => void;
-  stepForward: () => void;
-  stepBackward: () => void;
-  formatYear: (year: number) => string;
-}
-
-export function useTimeline(): UseTimelineResult {
+export function useTimeline() {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  // Локальний стейт замість useMemo
   const [era, setEraState] = useState<EraConfig>(DEFAULT_ERA);
   const [year, setYearState] = useState<number>(DEFAULT_ERA.startYear);
 
-  // Синхронізація з URL (один раз при монтуванні і при зміні URL)
   useEffect(() => {
     const eraId = searchParams.get('era');
     const yearParam = searchParams.get('year');
@@ -33,9 +20,10 @@ export function useTimeline(): UseTimelineResult {
       const parsed = parseInt(yearParam, 10);
       const clamped = Math.max(newEra.startYear, Math.min(newEra.endYear, parsed));
       setYearState(clamped);
-    } else {
-      setYearState(Math.round((newEra.startYear + newEra.endYear) / 2));
+      return;
     }
+
+    setYearState(newEra.startYear);
   }, [searchParams]);
 
   const updateURL = useCallback(
@@ -49,7 +37,7 @@ export function useTimeline(): UseTimelineResult {
     (newEraId: string) => {
       const newEra = getEraById(newEraId);
       if (newEra) {
-        const newYear = Math.round((newEra.startYear + newEra.endYear) / 2);
+        const newYear = newEra.startYear;
         updateURL(newEraId, newYear);
       }
     },
@@ -72,11 +60,11 @@ export function useTimeline(): UseTimelineResult {
     setYear(year - era.step);
   }, [year, era.step, setYear]);
 
-  const formatYear = useCallback((y: number): string => {
+  const formatYear = useCallback((y: number, bc: string, ac: string): string => {
     if (y < 0) {
-      return `${Math.abs(y)} до н.е.`;
+      return `${Math.abs(y)} ${bc}`;
     }
-    return String(y);
+    return `${y} ${ac}`;
   }, []);
 
   return {

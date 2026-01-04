@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeSwitcher } from '@/components/themeSwitcher';
-import { useI18n } from '@/providors';
+import { useI18n } from '@/providers';
 import type { ChangeEvent } from 'react';
 
 const defineNavClass = (path: string, pathname: string) => {
@@ -12,14 +12,13 @@ const defineNavClass = (path: string, pathname: string) => {
 
 export function Header() {
   const { pathname } = useLocation();
-  const {
-    text: { header },
-    setLang,
-    lang,
-  } = useI18n();
+  const { text, setLang, lang } = useI18n();
+  const { header } = text || {};
+
+  if (!header) return null;
 
   const onLangChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setLang(event.target.value as 'ua-UA');
+    setLang(event.target.value as 'uk-UA');
   };
 
   return (

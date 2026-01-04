@@ -1,14 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import ua from 'data/i18n/ua.json';
+import uk from 'data/i18n/uk.json';
 import en from 'data/i18n/en.json';
 
 const languages = {
-  'ua-UA': ua,
+  'uk-UA': uk,
   'en-US': en,
 };
 
-type LangugeKey = keyof typeof languages;
-type Languge = typeof ua;
+export type LangugeKey = keyof typeof languages;
+type Languge = typeof uk;
 
 type I18nProviderProps = {
   children: React.ReactNode;
@@ -23,14 +23,14 @@ type I18nProviderState = {
 };
 
 const initialState: I18nProviderState = {
-  lang: 'ua-UA',
-  text: ua,
+  lang: 'uk-UA',
+  text: uk,
   setLang: () => null,
 };
 
 const I18nProviderContext = createContext<I18nProviderState>(initialState);
 
-export function I18nProvider({ children, defaultKey = 'ua-UA', storageKey = 'language', ...props }: I18nProviderProps) {
+export function I18nProvider({ children, defaultKey = 'uk-UA', storageKey = 'language', ...props }: I18nProviderProps) {
   const defaultLangKey = (localStorage.getItem(storageKey) || defaultKey) as LangugeKey;
   const [langKey, setLangKey] = useState<LangugeKey>(() => defaultLangKey);
 

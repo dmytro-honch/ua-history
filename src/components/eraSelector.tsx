@@ -3,7 +3,7 @@ import { ERAS, type EraConfig } from 'data/config/eras';
 interface EraSelectorProps {
   currentEra: EraConfig;
   onChange: (eraId: string) => void;
-  lang: 'uk' | 'en';
+  lang: 'ua' | 'en';
 }
 
 export function EraSelector({ currentEra, onChange, lang }: EraSelectorProps) {

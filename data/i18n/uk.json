@@ -1,7 +1,7 @@
 {
   "header": {
     "languages": {
-      "ua-UA": "українська",
+      "uk-UA": "українська",
       "en-US": "english"
     },
     "nav": {
@@ -11,7 +11,17 @@
       "contribute": "долучитись"
     }
   },
+  "keys": {
+    "json": {
+      "uk-UA": "uk",
+      "en-US": "en"
+    }
+  },
   "footer": {
     "copyright": "Інтерактивна історії україни"
+  },
+  "dates": {
+    "ac": "р.",
+    "bc": "до н.е."
   }
 }

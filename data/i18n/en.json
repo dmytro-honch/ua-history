@@ -1,7 +1,7 @@
 {
   "header": {
     "languages": {
-      "ua-UA": "українська",
+      "uk-UA": "українська",
       "en-US": "english"
     },
     "nav": {
@@ -11,7 +11,17 @@
       "contribute": "contribute"
     }
   },
+  "keys": {
+    "json": {
+      "uk-UA": "uk",
+      "en-US": "en"
+    }
+  },
   "footer": {
     "copyright": "Interactive History of Ukraine"
+  },
+  "dates": {
+    "ac": "",
+    "bc": "bc"
   }
 }

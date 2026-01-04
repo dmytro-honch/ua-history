@@ -72,3 +72,37 @@ export function getEraById(id: string): EraConfig | undefined {
 export function getEraByYear(year: number): EraConfig | undefined {
   return ERAS.find((era) => year >= era.startYear && year < era.endYear);
 }
+
+export interface GenerateTicksOptions {
+  start: number;
+  end: number;
+  step: number;
+  includeStart?: boolean;
+  includeEnd?: boolean;
+  includeZero?: boolean;
+}
+
+export function generateTicks({ start, end, step, includeStart = false, includeEnd = false, includeZero = true }: GenerateTicksOptions): number[] {
+  const ticks: number[] = [];
+
+  const firstTick = Math.ceil(start / step) * step;
+
+  for (let tick = firstTick; tick <= end; tick += step) {
+    ticks.push(tick);
+  }
+
+  if (includeZero && start < 0 && end > 0 && !ticks.includes(0)) {
+    ticks.push(0);
+    ticks.sort((a, b) => a - b);
+  }
+
+  if (includeStart && ticks[0] !== start) {
+    ticks.unshift(start);
+  }
+
+  if (includeEnd && ticks[ticks.length - 1] !== end) {
+    ticks.push(end);
+  }
+
+  return ticks;
+}

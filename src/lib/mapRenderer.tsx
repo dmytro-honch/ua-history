@@ -149,11 +149,11 @@ export class GeoRenderer {
   clear(backgroundColor?: string): void {
     const { ctx, drawWidth, drawHeight } = this;
 
+    ctx.clearRect(0, 0, drawWidth, drawHeight);
+
     if (backgroundColor) {
       ctx.fillStyle = backgroundColor;
       ctx.fillRect(0, 0, drawWidth, drawHeight);
-    } else {
-      ctx.clearRect(0, 0, drawWidth, drawHeight);
     }
   }
 
