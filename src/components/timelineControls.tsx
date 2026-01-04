@@ -5,7 +5,7 @@ import { useTimeline } from '@/hooks/useTimeline';
 
 interface TimelineControlsProps {
   timeline: ReturnType<typeof useTimeline>;
-  lang: 'ua' | 'en';
+  lang: 'uk' | 'en';
   bcPostfix: string;
   acPostfix: string;
 }

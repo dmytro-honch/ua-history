@@ -16,7 +16,7 @@ export const UKRAINE_DATA_BASE_URL = isDev ? '/data/territories/ukraine.geojson'
 
 export function MapPage() {
   const { text, lang } = useI18n();
-  const langJsonKey = text.keys.json[lang] as 'ua' | 'en';
+  const langJsonKey = text.keys.json[lang] as 'uk' | 'en';
   const { bc: bcPostfix, ac: acPostfix } = text.dates;
 
   const { width, height, bounds } = useMapSize();
