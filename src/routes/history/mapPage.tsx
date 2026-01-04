@@ -24,7 +24,7 @@ export function MapPage() {
   const { data: ukraineData, loading: ukraineloading } = useGeoJSON(UKRAINE_DATA_BASE_URL);
 
   const timeline = useTimeline();
-  const { era, year } = timeline;
+  const { year } = timeline;
 
   const layers: MapLayer[] = useMemo(() => {
     if (!europeData || !ukraineData) return [];

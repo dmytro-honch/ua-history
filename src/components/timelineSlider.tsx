@@ -11,7 +11,7 @@ interface TimelineSliderProps {
 }
 
 export function TimelineSlider({ era, year, onChange, formatYear, wrapperWidth }: TimelineSliderProps) {
-  const [highlight, setHighlight] = useState<{ from: number; to: number } | null>({ from: 1932, to: 1933 });
+  const [highlight] = useState<{ from: number; to: number } | null>({ from: 1932, to: 1933 });
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   console.log('wrapperWidth', wrapperWidth);
