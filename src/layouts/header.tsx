@@ -44,7 +44,6 @@ export function Header() {
         </nav>
 
         <div className="page__header--controls">
-          <ThemeSwitcher />
           <select onChange={onLangChange} name="language" value={lang}>
             {Object.entries(header.languages).map(([langKey, text]) => (
               <option key={langKey} value={langKey} disabled={lang === langKey}>
@@ -52,6 +51,7 @@ export function Header() {
               </option>
             ))}
           </select>
+          <ThemeSwitcher />
         </div>
       </div>
     </header>

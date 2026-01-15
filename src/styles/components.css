@@ -78,3 +78,12 @@
     transform: translate(0, -1rem) rotate(-225deg);
   }
 }
+
+.theme-switcher {
+  border: 1px solid var(--color-border);
+  display: flex;
+  padding: 2px;
+  border-radius: 4px;
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-foreground);
+}

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ERAS, type EraConfig, getEraById } from 'data/config/eras';
+import { ERAS, type EraConfig, getEraById } from '@/config/eras';
 
 const DEFAULT_ERA = ERAS[2]; // medieval
 

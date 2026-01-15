@@ -1,4 +1,4 @@
-import { generateTicks } from 'data/config/eras';
+import { generateTicks } from '@/config/eras';
 import { useRef, useState, useEffect, useCallback, useMemo } from 'react';
 
 type HighlightRange = {

@@ -10,8 +10,8 @@ export function ThemeSwitcher() {
   };
 
   return (
-    <button onClick={toggleTheme} aria-label="Toggle theme">
-      {theme === 'light' ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
+    <button className="theme-switcher" onClick={toggleTheme} aria-label="Toggle theme">
+      {theme === 'light' ? <MoonIcon /> : <SunIcon />}
     </button>
   );
 }

@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ThemeProvider, I18nProvider } from '@/providers';
+import { ThemeProvider, I18nProvider, QueryProvider } from '@/providers';
 import { MainLayout } from '@/layouts/mainLayout';
 import { HomePage } from '@/routes/history/homePage';
 import { MapPage } from '@/routes/history/mapPage';
@@ -40,11 +40,13 @@ const router = createBrowserRouter([
 function App() {
   return (
     <ErrorBoundary>
-      <I18nProvider>
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </I18nProvider>
+      <QueryProvider>
+        <I18nProvider>
+          <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </I18nProvider>
+      </QueryProvider>
     </ErrorBoundary>
   );
 }

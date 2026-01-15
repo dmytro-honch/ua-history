@@ -1,4 +1,4 @@
-import { ERAS, type EraConfig } from 'data/config/eras';
+import { ERAS, type EraConfig } from '@/config/eras';
 
 interface EraSelectorProps {
   currentEra: EraConfig;

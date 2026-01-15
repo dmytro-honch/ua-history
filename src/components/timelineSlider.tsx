@@ -1,4 +1,4 @@
-import { type EraConfig } from 'data/config/eras';
+import { type EraConfig } from '@/config/eras';
 import { Range } from './formElements/range';
 import { useRef, useState } from 'react';
 
