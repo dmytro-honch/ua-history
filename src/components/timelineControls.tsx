@@ -5,12 +5,11 @@ import { useTimeline } from '@/hooks/useTimeline';
 
 interface TimelineControlsProps {
   timeline: ReturnType<typeof useTimeline>;
-  lang: 'uk' | 'en';
   bcPostfix: string;
   acPostfix: string;
 }
 
-export function TimelineControls({ timeline, lang, bcPostfix, acPostfix }: TimelineControlsProps) {
+export function TimelineControls({ timeline, bcPostfix, acPostfix }: TimelineControlsProps) {
   const { era, year, setEra, setYear, stepForward, stepBackward, formatYear } = timeline;
   const [wrapperWidth, setWrapperWidth] = useState(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -46,7 +45,7 @@ export function TimelineControls({ timeline, lang, bcPostfix, acPostfix }: Timel
 
   return (
     <div className="timeline-controls" ref={wrapperRef}>
-      <EraSelector currentEra={era} onChange={setEra} lang={lang} />
+      <EraSelector currentEra={era} onChange={setEra} />
 
       <div className="timeline-controls__slider-wrapper">
         <div className="timeline-slider__current">{formatYear(year, bcPostfix, acPostfix)}</div>

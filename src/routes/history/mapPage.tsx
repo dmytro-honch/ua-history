@@ -15,8 +15,7 @@ export const UKRAINE_DATA_BASE_URL = isDev ? '/data/territories/ukraine.geojson'
 //   : 'https://raw.githubusercontent.com/your-username/ukraine-history/main/data';
 
 export function MapPage() {
-  const { text, lang } = useI18n();
-  const langJsonKey = text.keys.json[lang] as 'uk' | 'en';
+  const { text } = useI18n();
   const { bc: bcPostfix, ac: acPostfix } = text.dates;
 
   const { width, height, bounds } = useMapSize();
@@ -72,7 +71,7 @@ export function MapPage() {
         onMarkerClick={(marker) => console.log('Clicked:', marker.id)}
       />
       <div className="map-page__controls">
-        <TimelineControls timeline={timeline} lang={langJsonKey} bcPostfix={bcPostfix} acPostfix={acPostfix} />
+        <TimelineControls timeline={timeline} bcPostfix={bcPostfix} acPostfix={acPostfix} />
       </div>
     </div>
   );

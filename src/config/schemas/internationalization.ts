@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const internationalizationSchema = z.object({
   header: z.object({
+    language: z.string(),
     languages: z.object({
       'uk-UA': z.string(),
       'en-US': z.string(),
@@ -26,6 +27,11 @@ export const internationalizationSchema = z.object({
     ac: z.string(),
     bc: z.string(),
   }),
+  map: z.object({
+    controls: z.object({
+      'era-select-label': z.string(),
+    }),
+  }),
 });
 
 export type Internationalization = z.infer<typeof internationalizationSchema>;
@@ -36,6 +42,7 @@ export const AVAILABLE_LANGUAGES = {
 } as const;
 
 export type LanguageKey = keyof typeof AVAILABLE_LANGUAGES;
+export type LanguageVal = (typeof AVAILABLE_LANGUAGES)[LanguageKey];
 
 export function isLanguageKey(key: string): key is LanguageKey {
   return key in AVAILABLE_LANGUAGES;

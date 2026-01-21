@@ -1,56 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* Import component styles */
 @import './styles/layout.css';
 @import './styles/components.css';
 @import './styles/timeline.css';
+@import './styles/map.css';
 
-/* CSS Custom Properties */
 :root {
-  --color-background: oklch(1 0 0);
-  --color-foreground: oklch(0.145 0 0);
-  --color-card: oklch(1 0 0);
-  --color-card-foreground: oklch(0.145 0 0);
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.145 0 0);
-  --color-primary: oklch(0.205 0 0);
-  --color-primary-foreground: oklch(0.985 0 0);
-  --color-secondary: oklch(0.97 0 0);
-  --color-secondary-foreground: oklch(0.205 0 0);
-  --color-muted: oklch(0.97 0 0);
-  --color-muted-foreground: oklch(0.556 0 0);
-  --color-accent: oklch(0.97 0 0);
-  --color-accent-foreground: oklch(0.205 0 0);
-  --color-destructive: oklch(0.577 0.245 27.325);
-  --color-destructive-foreground: oklch(0.985 0 0);
-  --color-border: oklch(0.922 0 0);
-  --color-input: oklch(0.922 0 0);
-  --color-ring: oklch(0.708 0 0);
-  --radius: 0.5rem;
+  --color-background: rgba(255, 255, 255);
+  --color-foreground: rgba(37, 37, 37);
+  --color-card: rgba(255, 255, 255);
+  --color-card-foreground: rgba(37, 37, 37);
+  --color-popover: rgba(255, 255, 255);
+  --color-popover-foreground: rgba(37, 37, 37);
+  --color-primary: rgba(52, 52, 52);
+  --color-primary-foreground: rgba(251, 251, 251);
+  --color-secondary: rgba(247, 247, 247);
+  --color-secondary-foreground: rgba(52, 52, 52);
+  --color-muted: rgba(247, 247, 247);
+  --color-muted-foreground: rgba(142, 142, 142);
+  --color-accent: rgba(247, 247, 247);
+  --color-accent-foreground: rgba(52, 52, 52);
+  --color-destructive: rgba(212, 88, 89);
+  --color-destructive-foreground: rgba(251, 251, 251);
+  --color-border: rgba(235, 235, 235);
+  --color-popup: rgba(235, 235, 235, 0.95);
+  --color-ring: rgba(180, 180, 180);
+  --radius: 1.5rem;
 }
 
 .dark {
-  --color-background: oklch(0.145 0 0);
-  --color-foreground: oklch(0.985 0 0);
-  --color-card: oklch(0.205 0 0);
-  --color-card-foreground: oklch(0.985 0 0);
-  --color-popover: oklch(0.205 0 0);
-  --color-popover-foreground: oklch(0.985 0 0);
-  --color-primary: oklch(0.922 0 0);
-  --color-primary-foreground: oklch(0.205 0 0);
-  --color-secondary: oklch(0.269 0 0);
-  --color-secondary-foreground: oklch(0.985 0 0);
-  --color-muted: oklch(0.269 0 0);
-  --color-muted-foreground: oklch(0.708 0 0);
-  --color-accent: oklch(0.269 0 0);
-  --color-accent-foreground: oklch(0.985 0 0);
-  --color-destructive: oklch(0.704 0.191 22.216);
-  --color-destructive-foreground: oklch(0.985 0 0);
-  --color-border: oklch(1 0 0 / 10%);
-  --color-input: oklch(1 0 0 / 15%);
-  --color-ring: oklch(0.556 0 0);
+  --color-background: rgba(37, 37, 37);
+  --color-foreground: rgba(251, 251, 251);
+  --color-card: rgba(52, 52, 52);
+  --color-card-foreground: rgba(251, 251, 251);
+  --color-popover: rgba(52, 52, 52);
+  --color-popover-foreground: rgba(251, 251, 251);
+  --color-primary: rgba(235, 235, 235);
+  --color-primary-foreground: rgba(52, 52, 52);
+  --color-secondary: rgba(69, 69, 69);
+  --color-secondary-foreground: rgba(251, 251, 251);
+  --color-muted: rgba(69, 69, 69);
+  --color-muted-foreground: rgba(130, 130, 130);
+  --color-accent: rgba(69, 69, 69);
+  --color-accent-foreground: rgba(251, 251, 251);
+  --color-destructive: rgba(180, 138, 100);
+  --color-destructive-foreground: rgba(251, 251, 251);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-popup: rgba(57, 57, 57, 0.95);
+  --color-ring: rgba(142, 142, 142);
 }
-
 html {
   font-family: 'Montserrat', sans-serif;
   font-optical-sizing: auto;

@@ -1,19 +1,22 @@
 import { ERAS, type EraConfig } from '@/config/eras';
+import { Select } from './formElements/select';
+import { useI18n } from '@/providers';
+import { fromIsoLangToKeyLang } from '@/lib/textHelpers';
 
 interface EraSelectorProps {
   currentEra: EraConfig;
   onChange: (eraId: string) => void;
-  lang: 'uk' | 'en';
 }
 
-export function EraSelector({ currentEra, onChange, lang }: EraSelectorProps) {
+export function EraSelector({ currentEra, onChange }: EraSelectorProps) {
+  const { text, lang } = useI18n();
+
+  const options = ERAS.map(({ name, id }) => ({
+    value: id,
+    text: name[fromIsoLangToKeyLang(lang)],
+  }));
+
   return (
-    <select value={currentEra.id} onChange={(e) => onChange(e.target.value)} className="era-selector">
-      {ERAS.map((era) => (
-        <option key={era.id} value={era.id}>
-          {era.name[lang]}
-        </option>
-      ))}
-    </select>
+    <Select openPosition="top" minWidth={20} options={options} current={currentEra.id} onChange={onChange} label={text.map.controls['era-select-label']} />
   );
 }

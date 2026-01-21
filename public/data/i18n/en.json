@@ -1,5 +1,6 @@
 {
   "header": {
+    "language": "language",
     "languages": {
       "uk-UA": "українська",
       "en-US": "english"
@@ -23,5 +24,10 @@
   "dates": {
     "ac": "",
     "bc": "bc"
+  },
+  "map": {
+    "controls": {
+      "era-select-label": "Era"
+    }
   }
 }
