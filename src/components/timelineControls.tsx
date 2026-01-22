@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { useTimeline } from '@/hooks/useTimeline';
 import { EraSelector } from './eraSelector';
 import { TimelineSlider } from './timelineSlider';
-import { useTimeline } from '@/hooks/useTimeline';
 
 interface TimelineControlsProps {
   timeline: ReturnType<typeof useTimeline>;
@@ -12,14 +12,13 @@ interface TimelineControlsProps {
 export function TimelineControls({ timeline, bcPostfix, acPostfix }: TimelineControlsProps) {
   const { era, year, setEra, setYear, stepForward, stepBackward, formatYear } = timeline;
   const [wrapperWidth, setWrapperWidth] = useState(0);
-  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
 
     const updateWidth = () => {
-      const w = wrapperRef.current?.clientWidth || 0;
-      if (w > 0) setWrapperWidth(w);
+      const width = window.innerWidth || 0;
+      if (width > 0) setWrapperWidth(width);
     };
 
     const debouncedUpdate = () => {
@@ -29,36 +28,31 @@ export function TimelineControls({ timeline, bcPostfix, acPostfix }: TimelineCon
 
     updateWidth();
 
-    const observer = new ResizeObserver(debouncedUpdate);
-    if (wrapperRef.current) {
-      observer.observe(wrapperRef.current);
-    }
-
     window.addEventListener('resize', debouncedUpdate);
 
     return () => {
       clearTimeout(timeoutId);
-      observer.disconnect();
       window.removeEventListener('resize', debouncedUpdate);
     };
   }, []);
 
   return (
-    <div className="timeline-controls" ref={wrapperRef}>
-      <EraSelector currentEra={era} onChange={setEra} />
+    <>
+      <div className="timeline-controls__era-selector">
+        <EraSelector currentEra={era} onChange={setEra} />
+      </div>
 
       <div className="timeline-controls__slider-wrapper">
-        <div className="timeline-slider__current">{formatYear(year, bcPostfix, acPostfix)}</div>
         <button onClick={stepBackward} disabled={year <= era.startYear} className="timeline-controls__btn">
           ←
         </button>
-
-        <TimelineSlider era={era} year={year} onChange={setYear} formatYear={(year) => formatYear(year, bcPostfix, acPostfix)} wrapperWidth={wrapperWidth} />
-
+        <div className="timeline-slider__current">{formatYear(year, bcPostfix, acPostfix)}</div>
         <button onClick={stepForward} disabled={year >= era.endYear} className="timeline-controls__btn">
           →
         </button>
+
+        <TimelineSlider era={era} year={year} onChange={setYear} formatYear={(year) => formatYear(year, bcPostfix, acPostfix)} wrapperWidth={wrapperWidth} />
       </div>
-    </div>
+    </>
   );
 }

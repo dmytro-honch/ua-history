@@ -1,10 +1,10 @@
+import type { Dispatch, SetStateAction } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ThemeSwitcher } from '@/components/themeSwitcher';
 import { useI18n } from '@/providers';
 import { Select } from '@/components/formElements/select';
 import type { LanguageKey } from '@/config/schemas';
 import { capitalizeFirstChar } from '@/lib/textHelpers';
-import { useState } from 'react';
 import { HeaderToggle } from '@/components/headerToggle';
 
 const defineNavClass = (path: string, pathname: string) => {
@@ -14,9 +14,11 @@ const defineNavClass = (path: string, pathname: string) => {
   return isActive ? 'navigation__link navigation__link--active' : 'navigation__link';
 };
 
-const initState = !!localStorage.getItem('isHeaderOpened');
-export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(initState);
+type HeaderProps = {
+  isShow: boolean;
+  handleToggle: Dispatch<SetStateAction<boolean>>;
+};
+export function Header({ isShow, handleToggle }: HeaderProps) {
   const { pathname } = useLocation();
   const { text, setLang, lang } = useI18n();
   const { header } = text || {};
@@ -32,10 +34,10 @@ export function Header() {
     setLang(value);
   };
 
-  const currentClassName = isMenuOpen ? 'page__header show' : 'page__header';
+  const currentClassName = isShow ? 'page__header show' : 'page__header';
 
   const toggleHeader = () => {
-    setIsMenuOpen((prev) => {
+    handleToggle((prev) => {
       if (prev) {
         localStorage.removeItem('isHeaderOpened');
         return false;
@@ -48,7 +50,7 @@ export function Header() {
 
   return (
     <div className="page__header--container">
-      <HeaderToggle isOpen={isMenuOpen} toogle={toggleHeader} />
+      <HeaderToggle isOpen={isShow} toogle={toggleHeader} />
 
       <header className={currentClassName}>
         <nav className="navigation__wrapper">

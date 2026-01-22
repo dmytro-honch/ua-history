@@ -47,21 +47,15 @@
 
 .timeline-slider {
   display: flex;
-  align-items: center;
-  gap: 12px;
   flex: 1;
   max-width: 100%;
+  background-color: black;
 }
 
 .timeline-slider__input {
   height: 6px;
   cursor: pointer;
   width: 100%;
-}
-
-.timeline-slider__input--wrapper {
-  flex: 1;
-  position: relative;
 }
 
 .timeline-slider__label {
@@ -80,10 +74,6 @@
   color: #ffeaa7;
   min-width: 100px;
   text-align: center;
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.7);
   padding: 15px 30px 5px;
   border-radius: 40px 40px 0 0;
@@ -109,5 +99,6 @@
 }
 
 .range__wrapper svg {
-  width: 100%;
+  max-width: 100%;
+  display: block;
 }

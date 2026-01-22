@@ -61,6 +61,16 @@ export function MapPage() {
 
   return (
     <div className="map__wrapper">
+      <div className="map__controls">
+        <div className="map__controls--toolbar">
+          <svg width={200} height={500} viewBox="0 0 200 500">
+            <rect x="0" y="0" width="200" height="500" fill="orangered" />
+          </svg>
+        </div>
+        <div className="map__controls--timeline">
+          <TimelineControls timeline={timeline} bcPostfix={bcPostfix} acPostfix={acPostfix} />
+        </div>
+      </div>
       <GeoMap
         className="map"
         width={width}
@@ -70,9 +80,6 @@ export function MapPage() {
         markers={markers}
         onMarkerClick={(marker) => console.log('Clicked:', marker.id)}
       />
-      <div className="map-page__controls">
-        <TimelineControls timeline={timeline} bcPostfix={bcPostfix} acPostfix={acPostfix} />
-      </div>
     </div>
   );
 }
