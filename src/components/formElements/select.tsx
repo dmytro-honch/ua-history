@@ -1,5 +1,6 @@
 import { capitalizeFirstChar } from '@/lib/textHelpers';
 import { useState } from 'react';
+import { transform } from 'zod';
 
 type Value<T> = T;
 type Option<T> = {
@@ -27,19 +28,24 @@ export function Select<T>({ options, current, onChange, label, orientation = 'ro
     setIsOpen(false);
   };
 
+  const onCLick = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   const currentText = options.find(({ value }) => value === current)?.text;
+  const chevronClass = isOpen ? 'opened' : '';
 
   return (
     <div className="select__wrapper" style={{ flexDirection: orientation }}>
-      <button onClick={() => setIsOpen(true)} className="select__button" style={{ minWidth: `${minWidth}rem` }}>
+      <button onClick={onCLick} className="select__button" style={{ minWidth: `${minWidth}rem` }}>
         {label && (
           <label htmlFor={`select__${label}`} className="select__label">
             {capitalizeFirstChar(label)} :
           </label>
         )}
-        <div className="select__expanded">
+        <div className="select">
           <span>{currentText} </span>
-          <svg width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: 'inherit' }}>
+          <svg width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg" className={chevronClass}>
             <path d="M5.29297 1L3 3.29297L0.707031 1L1 0.707031L3 2.70703L5 0.707031L5.29297 1Z" style={{ stroke: 'currentColor' }} />
           </svg>
         </div>

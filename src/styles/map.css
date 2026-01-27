@@ -91,19 +91,22 @@
 .map__controls {
   display: grid;
   height: 100%;
-  grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 90% auto;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
   gap: 1rem;
   grid-template-areas:
-    'toolbar x x x'
-    'timeline timeline timeline timeline';
+    'toolbar empty'
+    'timeline timeline';
+  pointer-events: none;
 }
 
 .map__controls--toolbar {
   grid-area: toolbar;
   background-color: aqua;
+  pointer-events: auto;
 }
 .map__controls--timeline {
   grid-area: timeline;
   background-color: rebeccapurple;
+  pointer-events: auto;
 }

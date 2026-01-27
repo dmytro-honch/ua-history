@@ -22,7 +22,7 @@ export function Range({ start, end, step, year, onChange, formatYear = (y) => St
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const PADDING = 100;
+  const PADDING = 25;
   const trackWidth = width - PADDING * 2;
 
   const yearToX = useCallback(

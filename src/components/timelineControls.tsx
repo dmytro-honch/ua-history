@@ -37,22 +37,24 @@ export function TimelineControls({ timeline, bcPostfix, acPostfix }: TimelineCon
   }, []);
 
   return (
-    <>
-      <div className="timeline-controls__era-selector">
-        <EraSelector currentEra={era} onChange={setEra} />
+    <div className="timeline-controls">
+      <div className="timeline-controls__top-row">
+        <div className="timeline-controls__era-selector">
+          <EraSelector currentEra={era} onChange={setEra} />
+        </div>
+
+        <div className="timeline-controls__years">
+          <button onClick={stepBackward} disabled={year <= era.startYear} className="timeline-controls__btn">
+            ←
+          </button>
+          <div className="timeline-slider__current">{formatYear(year, bcPostfix, acPostfix)}</div>
+          <button onClick={stepForward} disabled={year >= era.endYear} className="timeline-controls__btn">
+            →
+          </button>
+        </div>
       </div>
 
-      <div className="timeline-controls__slider-wrapper">
-        <button onClick={stepBackward} disabled={year <= era.startYear} className="timeline-controls__btn">
-          ←
-        </button>
-        <div className="timeline-slider__current">{formatYear(year, bcPostfix, acPostfix)}</div>
-        <button onClick={stepForward} disabled={year >= era.endYear} className="timeline-controls__btn">
-          →
-        </button>
-
-        <TimelineSlider era={era} year={year} onChange={setYear} formatYear={(year) => formatYear(year, bcPostfix, acPostfix)} wrapperWidth={wrapperWidth} />
-      </div>
-    </>
+      <TimelineSlider era={era} year={year} onChange={setYear} formatYear={(year) => formatYear(year, bcPostfix, acPostfix)} wrapperWidth={wrapperWidth} />
+    </div>
   );
 }
