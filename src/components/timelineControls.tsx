@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTimeline } from '@/hooks/useTimeline';
 import { EraSelector } from './eraSelector';
 import { TimelineSlider } from './timelineSlider';
