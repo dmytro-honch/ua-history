@@ -10,13 +10,12 @@ export const HeaderToggle = ({ isOpen, toogle }: HeaderToggleProps) => {
   };
 
   return (
-    <button className={`header-toggle`} onClick={onClick}>
+    <button className="header-toggle round-button" onClick={onClick}>
       <svg
         className={isOpen ? 'active' : ''}
         width="32"
         height="32"
         viewBox="0 0 32 32"
-        style={{ stroke: 'currentColor', fill: 'none' }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <path d="M 6 10 L 26 10 C 42 -11, 16 16, 6 26" className="top" />

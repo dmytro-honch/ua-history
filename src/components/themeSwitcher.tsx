@@ -8,14 +8,12 @@ export function ThemeSwitcher() {
   };
 
   return (
-    <button className="theme-switcher" onClick={toggleTheme} aria-label="Toggle theme">
+    <button className="theme-switcher round-button" onClick={toggleTheme} aria-label="Toggle theme">
       <svg
         className={theme}
         viewBox="0 0 32 32"
         width="32"
         height="32"
-        fill="none"
-        style={{ stroke: 'currentColor', fill: 'none' }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <path d="M 3 16 L 29 16" className="line-1" />

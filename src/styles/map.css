@@ -94,6 +94,7 @@
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr auto;
   gap: 1rem;
+  padding-top: 5rem;
   grid-template-areas:
     'toolbar empty'
     'timeline timeline';
@@ -102,11 +103,10 @@
 
 .map__controls--toolbar {
   grid-area: toolbar;
-  background-color: aqua;
+  background-color: rgba(0,0,0,.5);
   pointer-events: auto;
 }
 .map__controls--timeline {
   grid-area: timeline;
-  background-color: rebeccapurple;
   pointer-events: auto;
 }

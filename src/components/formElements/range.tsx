@@ -22,7 +22,7 @@ export function Range({ start, end, step, year, onChange, formatYear = (y) => St
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const PADDING = 25;
+  const PADDING = 30;
   const trackWidth = width - PADDING * 2;
 
   const yearToX = useCallback(
@@ -125,7 +125,7 @@ export function Range({ start, end, step, year, onChange, formatYear = (y) => St
 
   return (
     <div className="range__wrapper" ref={wrapperRef}>
-      <svg width={width} height="100" viewBox={`0 0 ${width} 100`} style={{ cursor: 'pointer', userSelect: 'none' }} onClick={handleClick}>
+      <svg width={width} height="60" viewBox={`0 0 ${width} 60`} style={{ cursor: 'pointer', userSelect: 'none', fill: 'currentColor' }} onClick={handleClick}>
         <line x1={PADDING} y1={30} x2={width - PADDING} y2={30} stroke="var(--color-track, #4a5568)" strokeWidth={6} strokeLinecap="round" />
 
         <line x1={PADDING} y1={30} x2={thumbX} y2={30} stroke="var(--color-active, #3182ce)" strokeWidth={6} strokeLinecap="round" />
@@ -139,9 +139,9 @@ export function Range({ start, end, step, year, onChange, formatYear = (y) => St
 
           return (
             <g key={tick}>
-              <line x1={x} y1={20} x2={x} y2={40} stroke="var(--color-tick, #718096)" strokeWidth={1} />
+              <line x1={x} y1={20} x2={x} y2={40} stroke="currentColor" strokeWidth={1} />
               {showLabel && (
-                <text x={x} y={y} textAnchor="middle" fontSize={10} fill="var(--color-tick-label, #a0aec0)">
+                <text x={x} y={y} textAnchor="middle" fontSize={10} fill="currentColor">
                   {formatYear(tick)}
                 </text>
               )}
