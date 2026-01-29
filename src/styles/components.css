@@ -49,6 +49,8 @@
   right: 0;
   bottom: 0;
   left: 0;
+  user-select: none;
+  background-color: rebeccapurple;
 }
 
 .select__list {
@@ -117,7 +119,7 @@
 
 .round-button[disabled] {
   pointer-events: none;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .round-button:active svg {

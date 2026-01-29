@@ -58,6 +58,7 @@
   transition: 0.5s transform ease;
   background-color: var(--color-popup);
   width: 100%;
+  will-change: transform;
 }
 @media (max-width: 1200px) {
   .page__header {

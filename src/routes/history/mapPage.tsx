@@ -8,11 +8,8 @@ import { useI18n } from '@/providers';
 const isDev = import.meta.env.DEV;
 
 // TODO: optimize jsons
-export const DATA_BASE_URL = isDev ? '/data/territories/europe.geojson' : 'https://raw.githubusercontent.com/your-username/ukraine-history/main/data';
-export const UKRAINE_DATA_BASE_URL = isDev ? '/data/territories/ukraine.geojson' : 'https://raw.githubusercontent.com/your-username/ukraine-history/main/data';
-// export const DATA_BASE_URL_SIMPLIFYED = isDev
-//   ? '/data/territories/europe-simplified.geojson'
-//   : 'https://raw.githubusercontent.com/your-username/ukraine-history/main/data';
+export const DATA_BASE_URL = isDev ? '/data/territories/2.geojson' : 'https://raw.githubusercontent.com/your-username/ukraine-history/main/data';
+export const UKRAINE_DATA_BASE_URL = isDev ? '/data/territories/1.geojson' : 'https://raw.githubusercontent.com/your-username/ukraine-history/main/data';
 
 export function MapPage() {
   const { text } = useI18n();
