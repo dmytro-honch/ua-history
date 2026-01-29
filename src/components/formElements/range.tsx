@@ -1,4 +1,5 @@
 import { generateTicks } from '@/config/eras';
+import { formatYear } from '@/lib/dateUtils';
 import { useRef, useState, useEffect, useCallback, useMemo } from 'react';
 
 type HighlightRange = {
@@ -13,12 +14,13 @@ type RangeProps = {
   step: number;
   year: number;
   onChange: (year: number) => void;
-  formatYear?: (year: number) => string;
-  highlight?: HighlightRange | null;
   width: number;
+  bcPostfix: string;
+  acPostfix: string;
+  highlight?: HighlightRange | null;
 };
 
-export function Range({ start, end, step, year, onChange, formatYear = (y) => String(y), highlight = null, width }: RangeProps) {
+export function Range({ start, end, step, year, onChange, highlight = null, width, bcPostfix, acPostfix}: RangeProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -141,8 +143,8 @@ export function Range({ start, end, step, year, onChange, formatYear = (y) => St
             <g key={tick}>
               <line x1={x} y1={20} x2={x} y2={40} stroke="currentColor" strokeWidth={1} />
               {showLabel && (
-                <text x={x} y={y} textAnchor="middle" fontSize={10} fill="currentColor">
-                  {formatYear(tick)}
+                <text x={x} y={y} textAnchor="middle" fontSize={14} fill="currentColor">
+                  {formatYear(tick, bcPostfix, acPostfix)}
                 </text>
               )}
             </g>

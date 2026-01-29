@@ -6,11 +6,12 @@ interface TimelineSliderProps {
   era: EraConfig;
   year: number;
   onChange: (year: number) => void;
-  formatYear: (year: number) => string;
   wrapperWidth: number | null | undefined;
+  bcPostfix: string;
+  acPostfix: string;
 }
 
-export function TimelineSlider({ era, year, onChange, formatYear, wrapperWidth }: TimelineSliderProps) {
+export function TimelineSlider({ era, year, onChange, wrapperWidth, bcPostfix, acPostfix }: TimelineSliderProps) {
   const [highlight] = useState<{ from: number; to: number } | null>({ from: 1932, to: 1933 });
 
   console.log('wrapperWidth', wrapperWidth);
@@ -22,9 +23,10 @@ export function TimelineSlider({ era, year, onChange, formatYear, wrapperWidth }
       step={era.step}
       year={year}
       onChange={onChange}
-      formatYear={formatYear}
       highlight={highlight}
       width={window.innerWidth || 0}
+      bcPostfix={bcPostfix}
+      acPostfix={acPostfix}
     />
   );
 }

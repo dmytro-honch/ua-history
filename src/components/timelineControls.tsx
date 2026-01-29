@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTimeline } from '@/hooks/useTimeline';
 import { EraSelector } from './eraSelector';
 import { TimelineSlider } from './timelineSlider';
+import { formatYear } from '@/lib/dateUtils';
 
 interface TimelineControlsProps {
   timeline: ReturnType<typeof useTimeline>;
@@ -10,7 +11,7 @@ interface TimelineControlsProps {
 }
 
 export function TimelineControls({ timeline, bcPostfix, acPostfix }: TimelineControlsProps) {
-  const { era, year, setEra, setYear, stepForward, stepBackward, formatYear } = timeline;
+  const { era, year, setEra, setYear, stepForward, stepBackward } = timeline;
   const [wrapperWidth, setWrapperWidth] = useState(0);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export function TimelineControls({ timeline, bcPostfix, acPostfix }: TimelineCon
     <div className="timeline-controls">
       <div className="timeline-controls__top-row">
         <div className="timeline-controls__era-selector">
-          <EraSelector currentEra={era} onChange={setEra} />
+          <EraSelector currentEra={era} onChange={setEra}  bcPostfix={bcPostfix} acPostfix={acPostfix} />
         </div>
 
         <div className="timeline-controls__years">
@@ -70,7 +71,7 @@ export function TimelineControls({ timeline, bcPostfix, acPostfix }: TimelineCon
         </div>
       </div>
 
-      <TimelineSlider era={era} year={year} onChange={setYear} formatYear={(year) => formatYear(year, bcPostfix, acPostfix)} wrapperWidth={wrapperWidth} />
+      <TimelineSlider era={era} year={year} onChange={setYear} wrapperWidth={wrapperWidth} bcPostfix={bcPostfix} acPostfix={acPostfix} />
     </div>
   );
 }

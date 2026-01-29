@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 0 1rem 1rem;
 }
 
 .timeline-controls__top-row {
@@ -18,8 +17,8 @@
 .timeline-slider__current {
   padding: 1rem;
   border-radius: 2rem;
-  background-color: var(--color-foreground);
-  color: var(--color-background);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   min-width: 10rem;
   text-align: center;
 }
@@ -62,8 +61,8 @@
 .range__wrapper {
   width: 100%;
   overflow: auto;
-  background-color: color-mix(in srgb, var(--color-foreground) 25%, var(--color-foreground) 50%);
-  color: var(--color-background);
+  background-color: color-mix(in srgb, var(--color-background) 25%, var(--color-background) 50%);
+  color: var(--color-foreground);
   border-radius: 0;
   padding: .25rem 1rem;
 }

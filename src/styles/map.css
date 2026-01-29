@@ -94,7 +94,7 @@
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr auto;
   gap: 1rem;
-  padding-top: 5rem;
+  padding: 6rem 1rem 1rem;
   grid-template-areas:
     'toolbar empty'
     'timeline timeline';

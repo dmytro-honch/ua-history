@@ -36,7 +36,7 @@ export function MapPage() {
       {
         id: 'ukraine',
         data: ukraineData,
-        style: { fillColor: '#627088ff', strokeColor: '#2d3748', strokeWidth: 2 },
+        style: { fillColor: '#627088ff', strokeColor: '#2d3748', strokeWidth: 1 },
         zIndex: 10,
       },
       // TODO: додати territories layer на основі year
@@ -60,8 +60,8 @@ export function MapPage() {
     <div className="map__wrapper">
       <div className="map__controls">
         <div className="map__controls--toolbar">
-          <svg width={200} height={500} viewBox="0 0 200 500">
-            <rect x="0" y="0" width="200" height="500" fill="orangered" />
+          <svg width={400} height={500} viewBox="0 0 200 500">
+            <rect x="0" y="0" width="200" height="500" fill="none" />
           </svg>
         </div>
         <div className="map__controls--timeline">
@@ -75,7 +75,7 @@ export function MapPage() {
         bounds={bounds}
         layers={layers}
         markers={markers}
-        onMarkerClick={(marker) => console.log('Clicked:', marker.id)}
+        onMarkerClick={(marker) => console.log('Clicked:', marker)}
       />
     </div>
   );

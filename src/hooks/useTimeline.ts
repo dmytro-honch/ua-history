@@ -60,13 +60,6 @@ export function useTimeline() {
     setYear(year - era.step);
   }, [year, era.step, setYear]);
 
-  const formatYear = useCallback((y: number, bc: string, ac: string): string => {
-    if (y < 0) {
-      return `${Math.abs(y)} ${bc}`;
-    }
-    return `${y} ${ac}`;
-  }, []);
-
   return {
     era,
     year,
@@ -74,6 +67,5 @@ export function useTimeline() {
     setYear,
     stepForward,
     stepBackward,
-    formatYear,
   };
 }

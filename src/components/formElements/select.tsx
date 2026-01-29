@@ -5,6 +5,7 @@ type Value<T> = T;
 type Option<T> = {
   value: Value<T>;
   text: string;
+  description?: string;
 };
 
 type Orientation = 'row' | 'column' | 'row-reverse' | 'column-reverse';
@@ -58,8 +59,15 @@ export function Select<T>({ options, current, onChange, label, orientation = 'ro
               const isDisabled = option.value === current;
 
               return (
-                <li onClick={() => !isDisabled && onSelect(option.value)} className={`select__option ${isDisabled ? 'disabled' : ''}`} key={option.text}>
-                  {capitalizeFirstChar(option.text)}
+                <li className="select__option" key={option.text}>
+                  <button
+                    className="select__option--button"
+                    onClick={() => !isDisabled && onSelect(option.value)} 
+                    disabled={isDisabled}
+                  >
+                  {capitalizeFirstChar(option.text)} {option.description && <span>{option.description}</span>}
+
+                  </button>
                 </li>
               );
             })}
