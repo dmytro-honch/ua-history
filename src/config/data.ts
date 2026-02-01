@@ -6,7 +6,7 @@
  */
 
 // Cloudflare R2 public URL for territories (via custom domain)
-const CLOUDFLARE_R2_URL = 'https://ukr.fyi';
+const CLOUDFLARE_R2_URL = 'https://cdn.ukr.fyi';
 
 export const config = {
   // Territories hosted on Cloudflare R2 (large files)
