@@ -1,59 +1,60 @@
-import { GeoMap, useGeoJSON, type GeoJSONFeature, type MapLayer } from '@/lib/mapRenderer';
+import { GeoMap, type GeoJSONFeature, type MapLayer } from '@/lib/mapRenderer';
 import { useMapSize } from '../../hooks/useMapSize';
 import { useTimeline } from '../../hooks/useTimeline';
 import { useMemo } from 'react';
 import { TimelineControls } from '@/components/timelineControls';
 import { useI18n } from '@/providers';
-
-const isDev = import.meta.env.DEV;
-
-// TODO: optimize jsons
-export const DATA_BASE_URL = isDev ? '/data/territories/2.geojson' : 'https://raw.githubusercontent.com/your-username/ukraine-history/main/data';
-export const UKRAINE_DATA_BASE_URL = isDev ? '/data/territories/1.geojson' : 'https://raw.githubusercontent.com/your-username/ukraine-history/main/data';
+import { useTerritories } from '@/hooks/useTerritoriesData';
 
 export function MapPage() {
   const { text } = useI18n();
   const { bc: bcPostfix, ac: acPostfix } = text.dates;
 
   const { width, height, bounds } = useMapSize();
-  const { data: europeData, loading } = useGeoJSON(DATA_BASE_URL);
-  const { data: ukraineData, loading: ukraineloading } = useGeoJSON(UKRAINE_DATA_BASE_URL);
+
+  const { ukraine, europe, isLoading, isError, error } = useTerritories();
 
   const timeline = useTimeline();
   const { year } = timeline;
 
+  console.log({ isLoading, isError, ukraine, europe });
+
   const layers: MapLayer[] = useMemo(() => {
-    if (!europeData || !ukraineData) return [];
+    if (!europe || !ukraine) return [];
 
     return [
       {
         id: 'countries',
-        data: europeData,
+        data: europe,
         filter: (f: GeoJSONFeature) => f.properties?.NAME !== 'Ukraine',
         style: { fillColor: '#4a5568', strokeColor: '#2d3748', strokeWidth: 0.5 },
         zIndex: 0,
       },
       {
         id: 'ukraine',
-        data: ukraineData,
+        data: ukraine,
         style: { fillColor: '#627088ff', strokeColor: '#2d3748', strokeWidth: 1 },
         zIndex: 10,
       },
       // TODO: додати territories layer на основі year
     ];
-  }, [europeData, year, ukraineData]);
+  }, [europe, year, ukraine]);
 
   const markers = [
     { id: 'kyiv', lat: 50.4501, lng: 30.5234, style: { fillColor: '#e74c3c' } },
     { id: 'lviv', lat: 49.8397, lng: 24.0297, style: { fillColor: '#e74c3c' } },
   ];
 
-  if (loading || !europeData || ukraineloading || !ukraineData) {
+  if (isLoading) {
     return (
       <div className="map__spinner--wapper">
         <span className="map__spinner"></span>
       </div>
     );
+  }
+
+  if (isError && error) {
+    return <div className="map__spinner--wapper">{JSON.stringify(error)}</div>;
   }
 
   return (

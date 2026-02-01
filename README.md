@@ -35,65 +35,158 @@ This project aims to create an accessible, educational resource for exploring Uk
 
 ### Technology Stack
 
-- React with TypeScript
-- Canvas 2D for map rendering
-- Monorepo structure (shared types, web app, contributor form)
-- GitHub Pages for hosting
-- GitHub Actions for PR validation and deployment
+- **React 19.2.0** with **TypeScript ~5.9.3**
+- **Vite 7.3.1** for fast build and development
+- **Canvas 2D** for map rendering
+- **React Router DOM 7.12.0** for client-side routing
+- **Chakra UI 3.30.0** for component library
+- **React Hook Form 7.70.0** for form management
+- **TanStack React Query 5.90.16** for data fetching and caching
+- **Zod 4.3.5** for schema validation
+- **Emotion** for CSS-in-JS styling
+- **GitHub Pages** for hosting
+- **GitHub Actions** for automated deployment
 
 ## Repository Structure
 
 ```
-ukraine-history/
-├── packages/
-│   ├── shared/
-│   │   ├── types/
-│   │   ├── schemas/
-│   │   ├── validators/
-│   │   └── utils/
-│   src/
+ua-history/
+├── .github/
+│   └── workflows/
+│       ├── deploy.yml              # GitHub Pages deployment workflow
+│       └── auto-merge.yml          # Auto-merge PR configuration
+├── .vscode/                        # VS Code settings
+├── dist/                           # Production build output
+├── node_modules/                   # Dependencies
+├── public/
+│   ├── data/
+│   │   ├── events/                 # Historical events organized by era
+│   │   │   ├── prehistoric/
+│   │   │   ├── ancient/
+│   │   │   ├── medieval/
+│   │   │   ├── early-modern/
+│   │   │   ├── modern/
+│   │   │   └── contemporary/
+│   │   ├── territories/            # GeoJSON files for historical territories
+│   │   │   └── *.geojson
+│   │   ├── i18n/                   # UI translations
+│   │   │   ├── en.json
+│   │   │   └── uk.json
+│   │   └── lib/                    # Utility scripts
+│   │       ├── simplify.js
+│   │       ├── minify.js
+│   │       └── cleanProps.js
+│   ├── favicon.svg
+│   └── CNAME                       # Custom domain for GitHub Pages
+├── shared/                         # Prepared for shared modules
+│   ├── types/
+│   ├── schemas/
+│   ├── validators/
+│   └── utils/
+├── src/
 │   ├── assets/
-│   ├── canvas/
+│   │   └── react.svg
 │   ├── components/
-│   ├── public/
-│   └── routes/
-│       ├── history/
-│       └── contribute/
-├── data/
-│   ├── i18n/
-│   │   ├── uk.json
-│   │   └── en.json
-│   ├── locations.json
-│   ├── territories/
-│   │   ├── kyivan-rus.geojson
-│   │   ├── hetmanate.geojson
-│   │   └── ...
-│   └── events/
-│       ├── prehistoric/
-│       ├── ancient/
-│       ├── medieval/
-│       ├── early-modern/
-│       ├── modern/
-│       └── contemporary/
-└── .github/
-    └── workflows/
-        ├── validate-pr.yml
-        └── deploy.yml
+│   │   ├── icons/                  # SVG icon components
+│   │   │   ├── sunIcon.tsx
+│   │   │   ├── moonIcon.tsx
+│   │   │   ├── checkIcon.tsx
+│   │   │   ├── circleIcon.tsx
+│   │   │   ├── chevronUpIcon.tsx
+│   │   │   └── chevronDownIcon.tsx
+│   │   ├── formElements/
+│   │   │   ├── select.tsx          # Custom select input
+│   │   │   └── range.tsx           # Custom range input
+│   │   ├── eraSelector.tsx         # Historical era selector
+│   │   ├── timelineControls.tsx    # Timeline navigation controls
+│   │   ├── timelineSlider.tsx      # Timeline slider component
+│   │   ├── themeSwitcher.tsx       # Dark/light theme toggle
+│   │   ├── headerToggle.tsx        # Mobile header toggle
+│   │   └── errorBoundary.tsx       # React error boundary
+│   ├── config/
+│   │   ├── eras.ts                 # Historical era configuration
+│   │   ├── data.ts                 # Data configuration
+│   │   └── schemas/
+│   │       ├── index.ts            # Schema exports
+│   │       └── internationalization.ts
+│   ├── hooks/
+│   │   ├── useTimeline.ts          # Timeline state management
+│   │   ├── useMapSize.tsx          # Canvas/map sizing hook
+│   │   └── usePublicData.ts        # Data fetching hook (@tanstack/react-query)
+│   ├── layouts/
+│   │   ├── mainLayout.tsx          # Main application layout wrapper
+│   │   └── header.tsx              # Header component with navigation
+│   ├── lib/
+│   │   ├── mapRenderer.tsx         # Canvas 2D map rendering logic
+│   │   ├── dateUtils.ts            # Date formatting utilities
+│   │   ├── loadData.ts             # Data loading utilities
+│   │   └── textHelpers.ts          # Text processing helpers
+│   ├── providers/
+│   │   ├── index.tsx               # Provider exports
+│   │   ├── themeProvider.tsx       # Theme context (light/dark mode)
+│   │   ├── i18nProvider.tsx        # Internationalization context
+│   │   └── queryProvider.tsx       # React Query provider setup
+│   ├── routes/
+│   │   ├── history/
+│   │   │   ├── homePage.tsx        # Landing/home page
+│   │   │   ├── mapPage.tsx         # Interactive map visualization
+│   │   │   └── aboutPage.tsx       # About section
+│   │   └── contribute/
+│   │       └── contributePage.tsx  # Historical event contribution form
+│   ├── styles/
+│   │   ├── layout.css              # Layout styles
+│   │   ├── components.css          # Component styles
+│   │   ├── map.css                 # Map visualization styles
+│   │   ├── timeline.css            # Timeline styles
+│   │   └── error.css               # Error boundary styles
+│   ├── App.tsx                     # Root React component with router setup
+│   ├── main.tsx                    # React entry point
+│   └── index.css                   # Global styles
+├── index.html                      # HTML entry point
+├── package.json                    # Project metadata and scripts
+├── package-lock.json               # Dependency lock file
+├── tsconfig.json                   # TypeScript root config
+├── tsconfig.app.json               # TypeScript app-specific config
+├── tsconfig.node.json              # TypeScript Node config
+├── vite.config.ts                  # Vite build configuration
+├── eslint.config.js                # ESLint configuration
+├── .prettierrc.json                # Prettier formatting config
+├── .prettierignore                 # Prettier ignore rules
+├── .gitignore                      # Git ignore rules
+├── LICENSE                         # Project license
+└── README.md                       # Project documentation
 ```
 
-**packages/shared/** — Shared TypeScript types, JSON schemas, validators, and utilities used by both web app and contribution form.
+**Root Configuration:**
+- TypeScript configuration with path aliases (`@/*` → `./src/*`, `data/*`)
+- Vite build tool for fast development and production builds
+- ESLint + Prettier for code quality and formatting
 
-**packages/web/** — Main React application with map rendering (canvas/), UI components, and routes for history view and contribution form.
+**src/components/** — Reusable UI components including era selector, timeline controls, theme switcher, icons, and form elements.
 
-**data/i18n/** — UI translation files for each supported language.
+**src/routes/** — Page components for history visualization (home, map, about) and contribution form.
 
-**data/locations.json** — Dictionary of all valid locations with coordinates and multilingual names.
+**src/providers/** — React context providers for theme, internationalization (i18n), and data fetching (React Query).
 
-**data/territories/** — GeoJSON files defining historical state borders for map overlays.
+**src/hooks/** — Custom React hooks for timeline state, map sizing, and data fetching.
 
-**data/events/** — Historical events organized by era, with JSON files for each period.
+**src/lib/** — Core utilities including Canvas 2D map renderer, date formatting, and data loading.
 
-**.github/workflows/** — CI/CD pipelines for PR validation and GitHub Pages deployment.
+**src/config/** — Configuration for historical eras, periods, territories, and schemas.
+
+**src/layouts/** — Layout components (main layout wrapper and header with navigation).
+
+**src/styles/** — CSS modules for layout, components, map, timeline, and error handling.
+
+**public/data/i18n/** — UI translation files (Ukrainian and English).
+
+**public/data/territories/** — GeoJSON files defining historical state borders for map overlays.
+
+**public/data/events/** — Historical events organized by era, with JSON files for each period.
+
+**shared/** — Prepared structure for shared TypeScript types, JSON schemas, validators, and utilities (currently placeholder directories).
+
+**.github/workflows/** — CI/CD pipelines for GitHub Pages deployment and auto-merge configuration.
 
 ## Historical Eras and Periods
 

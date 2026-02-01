@@ -1,37 +1,46 @@
-const basePath = import.meta.env.env.REACT_APP_BASE_PATH || '/';
+/**
+ * Data source configuration
+ *
+ * Territories (large GeoJSON files) are hosted on Cloudflare R2
+ * Other data (i18n, events) remains in /public/data/
+ */
 
-export const getDataBaseUrl = (filename: string) => {
-  return `${basePath}data/territories/${filename}`;
+// Cloudflare R2 public URL for territories (via custom domain)
+const CLOUDFLARE_R2_URL = 'https://ukr.fyi';
+
+export const config = {
+  // Territories hosted on Cloudflare R2 (large files)
+  territories: {
+    baseUrl: import.meta.env.VITE_TERRITORIES_URL || CLOUDFLARE_R2_URL,
+    // For local development, you can override with:
+    // VITE_TERRITORIES_URL=/data/territories
+  },
+
+  // Local data (i18n, events) - stays in /public/data/
+  local: {
+    baseUrl: import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL,
+  },
+} as const;
+
+/**
+ * Get full URL for territory file
+ */
+export const getTerritoryUrl = (filename: string): string => {
+  const cleanFilename = filename.startsWith('/') ? filename.slice(1) : filename;
+  return `${config.territories.baseUrl}/territories/${cleanFilename}`;
 };
 
-export const loadGeoJSON = async (filename: string) => {
-  try {
-    const url = getDataBaseUrl(filename);
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`Failed to load ${filename}: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error(`Error loading ${filename}:`, error);
-    throw error;
-  }
+/**
+ * Get full URL for local data (i18n, events)
+ */
+export const getLocalDataUrl = (path: string): string => {
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${config.local.baseUrl}/${cleanPath}`;
 };
 
-export const getI18nJson = async (filename: string) => {
-  try {
-    const url = `${basePath}data/i18n/${filename}.json`;
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`Failed to load ${filename}: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error(`Error loading ${filename}:`, error);
-    throw error;
-  }
+/**
+ * Get i18n JSON URL
+ */
+export const getI18nUrl = (locale: string): string => {
+  return getLocalDataUrl(`data/i18n/${locale}.json`);
 };
