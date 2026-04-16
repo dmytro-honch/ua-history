@@ -18,7 +18,7 @@ export function TimelineSlider({ era, year, onChange, wrapperWidth, bcPostfix, a
 
   return (
     <Range
-      start={era.startYear}
+     start={era.startYear}
       end={era.endYear}
       step={era.step}
       year={year}

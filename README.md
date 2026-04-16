@@ -39,11 +39,9 @@ This project aims to create an accessible, educational resource for exploring Uk
 - **Vite 7.3.1** for fast build and development
 - **Canvas 2D** for map rendering
 - **React Router DOM 7.12.0** for client-side routing
-- **Chakra UI 3.30.0** for component library
 - **React Hook Form 7.70.0** for form management
 - **TanStack React Query 5.90.16** for data fetching and caching
 - **Zod 4.3.5** for schema validation
-- **Emotion** for CSS-in-JS styling
 - **GitHub Pages** for hosting
 - **GitHub Actions** for automated deployment
 

@@ -65,23 +65,18 @@ export function Select<T>({ options, current, onChange, label, orientation = 'ro
 
       {isOpen && (
         <ul className={`select__list ${openPosition}`}>
-            {options.map((option) => {
-              const isDisabled = option.value === current;
+          {options.map((option) => {
+            const isDisabled = option.value === current;
 
-              return (
-                <li className="select__option" key={option.text}>
-                  <button
-                    className="select__option--button"
-                    onClick={() => !isDisabled && onSelect(option.value)} 
-                    disabled={isDisabled}
-                  >
+            return (
+              <li className="select__option" key={option.text}>
+                <button className="select__option--button" onClick={() => !isDisabled && onSelect(option.value)} disabled={isDisabled}>
                   {capitalizeFirstChar(option.text)} {option.description && <span>{option.description}</span>}
-
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       )}
     </div>
   );

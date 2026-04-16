@@ -20,7 +20,7 @@ type RangeProps = {
   highlight?: HighlightRange | null;
 };
 
-export function Range({ start, end, step, year, onChange, highlight = null, width, bcPostfix, acPostfix}: RangeProps) {
+export function Range({ start, end, step, year, onChange, highlight = null, width, bcPostfix, acPostfix }: RangeProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 

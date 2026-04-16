@@ -17,7 +17,7 @@ export function EraSelector({ currentEra, onChange, bcPostfix, acPostfix }: EraS
   const options = ERAS.map(({ name, id, startYear, endYear }) => ({
     value: id,
     text: name[fromIsoLangToKeyLang(lang)],
-    description: `${formatYear(startYear, bcPostfix, acPostfix)} - ${formatYear(endYear, bcPostfix, acPostfix)}`
+    description: `${formatYear(startYear, bcPostfix, acPostfix)} - ${formatYear(endYear, bcPostfix, acPostfix)}`,
   }));
 
   return (

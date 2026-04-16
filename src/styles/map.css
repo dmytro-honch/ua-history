@@ -103,7 +103,7 @@
 
 .map__controls--toolbar {
   grid-area: toolbar;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0, 0, 0, 0.5);
   pointer-events: auto;
 }
 .map__controls--timeline {
