@@ -208,16 +208,30 @@ export class GeoRenderer {
     }
   }
 
+  private applyFillStroke(style: RenderStyle, fillRule?: CanvasFillRule): void {
+    const { ctx } = this;
+    const { fillColor, strokeColor, strokeWidth = 1 } = style;
+
+    if (fillColor && fillColor !== 'none') {
+      ctx.fillStyle = fillColor;
+      ctx.fill(fillRule);
+    }
+    if (strokeColor && strokeColor !== 'none' && strokeWidth > 0) {
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = strokeWidth;
+      ctx.stroke();
+    }
+  }
+
   /**
    * Render a polygon (with optional holes)
    */
   private renderPolygon(coordinates: number[][][], style: RenderStyle): void {
     const { ctx } = this;
-    const { fillColor = '#cccccc', strokeColor = '#999999', strokeWidth = 1, opacity = 1, blur = 0 } = style;
+    const { opacity = 1, blur = 0 } = style;
 
     ctx.save();
 
-    // Apply blur if specified
     if (blur > 0) {
       ctx.filter = `blur(${blur}px)`;
     }
@@ -225,27 +239,12 @@ export class GeoRenderer {
     ctx.globalAlpha = opacity;
     ctx.beginPath();
 
-    // First ring is the outer boundary
-    const outerRing = coordinates[0];
-    this.tracePath(outerRing);
-
-    // Subsequent rings are holes (drawn in reverse to create holes via even-odd rule)
+    this.tracePath(coordinates[0]);
     for (let i = 1; i < coordinates.length; i++) {
       this.tracePath(coordinates[i]);
     }
 
-    // Fill
-    if (fillColor && fillColor !== 'none') {
-      ctx.fillStyle = fillColor;
-      ctx.fill('evenodd');
-    }
-
-    // Stroke
-    if (strokeColor && strokeColor !== 'none' && strokeWidth > 0) {
-      ctx.strokeStyle = strokeColor;
-      ctx.lineWidth = strokeWidth;
-      ctx.stroke();
-    }
+    this.applyFillStroke({ fillColor: '#cccccc', strokeColor: '#999999', strokeWidth: 1, ...style }, 'evenodd');
 
     ctx.restore();
   }
@@ -277,30 +276,8 @@ export class GeoRenderer {
    * Render a point
    */
   private renderPoint(coordinates: number[], style: RenderStyle): void {
-    const { ctx } = this;
-    const { fillColor = '#ff0000', strokeColor = '#990000', strokeWidth = 1, opacity = 1 } = style;
-
     const [lng, lat] = coordinates;
-    const { x, y } = this.project(lat, lng);
-    const radius = 5;
-
-    ctx.save();
-    ctx.globalAlpha = opacity;
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-
-    if (fillColor && fillColor !== 'none') {
-      ctx.fillStyle = fillColor;
-      ctx.fill();
-    }
-
-    if (strokeColor && strokeColor !== 'none' && strokeWidth > 0) {
-      ctx.strokeStyle = strokeColor;
-      ctx.lineWidth = strokeWidth;
-      ctx.stroke();
-    }
-
-    ctx.restore();
+    this.drawCircle(lat, lng, 5, { fillColor: '#ff0000', strokeColor: '#990000', strokeWidth: 1, ...style });
   }
 
   /**
@@ -331,24 +308,13 @@ export class GeoRenderer {
   drawCircle(lat: number, lng: number, radius: number, style: RenderStyle = {}): void {
     const { ctx } = this;
     const { x, y } = this.project(lat, lng);
-    const { fillColor = '#ff0000', strokeColor = '#990000', strokeWidth = 1, opacity = 1 } = style;
+    const { opacity = 1 } = style;
 
     ctx.save();
     ctx.globalAlpha = opacity;
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
-
-    if (fillColor && fillColor !== 'none') {
-      ctx.fillStyle = fillColor;
-      ctx.fill();
-    }
-
-    if (strokeColor && strokeColor !== 'none' && strokeWidth > 0) {
-      ctx.strokeStyle = strokeColor;
-      ctx.lineWidth = strokeWidth;
-      ctx.stroke();
-    }
-
+    this.applyFillStroke({ fillColor: '#ff0000', strokeColor: '#990000', strokeWidth: 1, ...style });
     ctx.restore();
   }
 
@@ -617,7 +583,6 @@ export function GeoMap({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<GeoRenderer | null>(null);
 
-  // Initialize renderer
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -627,25 +592,19 @@ export function GeoMap({
     canvas.height = height;
 
     rendererRef.current = new GeoRenderer(canvas, bounds);
-  }, [width, height]); // Only recreate on size change
+  }, [width, height]);
 
-  // Update bounds when they change
   useEffect(() => {
     rendererRef.current?.setBounds(bounds);
   }, [bounds]);
 
-  // Render layers and markers
   useEffect(() => {
     const renderer = rendererRef.current;
     if (!renderer) return;
 
-    // Clear canvas
     renderer.clear(backgroundColor);
 
-    // Sort layers by zIndex
     const sortedLayers = [...layers].sort((a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0));
-
-    // Render each layer
     for (const layer of sortedLayers) {
       renderer.render(layer.data, {
         defaultStyle: layer.style,
@@ -654,13 +613,11 @@ export function GeoMap({
       });
     }
 
-    // Render markers on top
     for (const marker of markers) {
       renderer.drawCircle(marker.lat, marker.lng, marker.radius ?? 6, marker.style);
     }
   }, [layers, markers, backgroundColor, bounds]);
 
-  // Handle clicks
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLCanvasElement>) => {
       const renderer = rendererRef.current;
@@ -673,7 +630,6 @@ export function GeoMap({
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
 
-      // Check if any marker was clicked
       if (onMarkerClick) {
         for (const marker of markers) {
           const point = renderer.project(marker.lat, marker.lng);
@@ -681,18 +637,15 @@ export function GeoMap({
           const distance = Math.sqrt((x - point.x) ** 2 + (y - point.y) ** 2);
 
           if (distance <= radius + 5) {
-            // 5px tolerance
             onMarkerClick(marker);
             return;
           }
         }
       }
 
-      // Map background click
       if (onMapClick) {
         const { lat, lng } = renderer.unproject(x, y);
         onMapClick(lat, lng);
-        console.log(`lat: ${lat}, lng: ${lng}`);
       }
     },
     [markers, onMarkerClick, onMapClick]

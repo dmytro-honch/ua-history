@@ -1,5 +1,5 @@
 import { capitalizeFirstChar } from '@/lib/textHelpers';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Value<T> = T;
 type Option<T> = {
@@ -22,6 +22,18 @@ type SelectProps<T> = {
 
 export function Select<T>({ options, current, onChange, label, orientation = 'row', openPosition = 'bottom', minWidth = 15 }: SelectProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
   const onSelect = (value: Value<T>) => {
     onChange(value);
@@ -36,7 +48,7 @@ export function Select<T>({ options, current, onChange, label, orientation = 'ro
   const chevronClass = isOpen ? 'opened' : '';
 
   return (
-    <div className="select__wrapper" style={{ flexDirection: orientation }}>
+    <div className="select__wrapper" ref={wrapperRef} style={{ flexDirection: orientation }}>
       <button onClick={onCLick} className="select__button" style={{ minWidth: `${minWidth}rem` }}>
         {label && (
           <label htmlFor={`select__${label}`} className="select__label">
@@ -52,9 +64,7 @@ export function Select<T>({ options, current, onChange, label, orientation = 'ro
       </button>
 
       {isOpen && (
-        <>
-          <div className="select__overlay" onClick={() => setIsOpen(false)} />
-          <ul className={`select__list ${openPosition}`}>
+        <ul className={`select__list ${openPosition}`}>
             {options.map((option) => {
               const isDisabled = option.value === current;
 
@@ -72,7 +82,6 @@ export function Select<T>({ options, current, onChange, label, orientation = 'ro
               );
             })}
           </ul>
-        </>
       )}
     </div>
   );
